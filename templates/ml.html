@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+{% block content %}
+<!-- PUT MAP UNDER HERE -->
+
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+  <h1 class="h2">Machine Learning Predictions</h1>
+
+</div>
+  
+  <!-- Calculator Here? -->
+  <div class="box">
+      <div id="test_stat"></div>
+      <br>
+      <div id="test_stat_two"></div>
+      <br>
+      <div id="test_stat_three"></div>
+  </div>
+
+<!-- KEEP ALL CODE ABOVE THIS LINE -->
+{% endblock content %}
+
+
+
+{% block script %} 
+<!-- js syntax for Flask -->
+<script src="{{ url_for('static', filename='ml.js') }}"></script>
+{% endblock %}
