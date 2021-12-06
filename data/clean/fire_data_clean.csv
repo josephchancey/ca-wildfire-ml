@@ -11,7 +11,8 @@ Date,County,Duration,AcresBurned
 2013-05,Glenn,5.0,217.0
 2013-05,San Bernardino,3.0,75.0
 2013-05,Riverside,2.0,510.0
-2013-05,"Kern, Ventura",7.0,4346.0
+2013-05,Kern,7.0,4346.0
+2013-05,Ventura,7.0,4346.0
 2013-05,Riverside,2.0,40.0
 2013-05,Los Angeles,2.0,712.0
 2013-05,Madera,2.0,91.0
@@ -31,7 +32,10 @@ Date,County,Duration,AcresBurned
 2013-06,Tuolumne,1.0,100.0
 2013-06,Butte,1.0,298.0
 2013-06,Riverside,1.0,0.0
-2013-06,"Sonoma, Solano, Lake, Colusa",5.0,28.0
+2013-06,Sonoma,5.0,28.0
+2013-06,Solano,5.0,28.0
+2013-06,Lake,5.0,28.0
+2013-06,Colusa,5.0,28.0
 2013-06,Merced,2.0,124.0
 2013-06,Lake,2.0,30.0
 2013-05,Los Angeles,10.0,30274.0
@@ -78,7 +82,8 @@ Date,County,Duration,AcresBurned
 2013-07,Kern,4.0,712.0
 2013-07,Tehama,1.0,195.0
 2013-07,Sonoma,1.0,158.0
-2013-07,"El Dorado, Sacramento",1.0,163.0
+2013-07,Sacramento,1.0,163.0
+2013-07,El Dorado,1.0,163.0
 2013-07,Riverside,2.0,40.0
 2013-07,Riverside,1.0,15.0
 2013-07,Calaveras,2.0,31.0
@@ -169,7 +174,8 @@ Date,County,Duration,AcresBurned
 2014-06,Tehama,1.0,225.0
 2014-06,Calaveras,2.0,120.0
 2014-06,Calaveras,3.0,85.0
-2014-07,"Napa, Lake",9.0,4300.0
+2014-07,Napa,9.0,4300.0
+2014-07,Lake,9.0,4300.0
 2014-07,El Dorado,1.0,30.0
 2014-07,Shasta,16.0,12661.0
 2014-07,Yolo,9.0,6488.0
@@ -184,7 +190,8 @@ Date,County,Duration,AcresBurned
 2014-07,Shasta,2.0,143.0
 2014-07,Kern,11.0,1680.0
 2014-07,Butte,3.0,72.0
-2014-07,"Amador, El Dorado",9.0,4240.0
+2014-07,El Dorado,9.0,4240.0
+2014-07,Amador,9.0,4240.0
 2014-07,Shasta,17.0,39736.0
 2014-07,Modoc,15.0,13153.0
 2014-07,Siskiyou,20.0,35302.0
@@ -253,6 +260,7 @@ Date,County,Duration,AcresBurned
 2015-07,San Benito,1.0,25.0
 2015-07,Tulare,6.0,430.0
 2015-07,Siskiyou,2.0,24.0
+2015-07,Napa,15.0,8051.0
 2016-10,Napa,3.0,65.0
 2015-07,Placer,1.0,26.0
 2015-07,El Dorado,7.0,75.0
@@ -286,7 +294,8 @@ Date,County,Duration,AcresBurned
 2015-08,Lassen,2.0,10570.0
 2015-08,San Diego,2.0,55.0
 2015-08,Tehama,2.0,110.0
-2015-08,"Lake, Napa",17.0,25118.0
+2015-08,Napa,17.0,25118.0
+2015-08,Lake,17.0,25118.0
 2015-08,San Luis Obispo,13.0,2446.0
 2015-08,Humboldt,12.0,146.0
 2015-08,Alameda,4.0,2700.0
@@ -301,11 +310,13 @@ Date,County,Duration,AcresBurned
 2015-09,Trinity,3.0,35.0
 2015-09,Lassen,2.0,40.0
 2015-09,Fresno,3.0,170.0
+2015-09,Amador,37.0,70868.0
 2015-09,Butte,7.0,1042.0
 2015-09,Shasta,3.0,109.0
 2015-10,Butte,1.0,104.0
 2015-07,Fresno,102.0,151623.0
 2016-04,Merced,1.0,30.0
+2015-12,Ventura,5.0,1388.0
 2015-11,Ventura,1.0,50.0
 2015-10,San Benito,5.0,670.0
 2015-10,Santa Barbara,12.0,21.0
@@ -355,7 +366,8 @@ Date,County,Duration,AcresBurned
 2016-06,Alameda,2.0,211.0
 2016-06,Mono,15.0,650.0
 2016-06,Lake,3.0,215.0
-2016-06,"El Dorado, Placer",21.0,5646.0
+2016-06,Placer,21.0,5646.0
+2016-06,El Dorado,21.0,5646.0
 2016-06,Amador,2.0,372.0
 2016-07,Fresno,3.0,188.0
 2016-07,Los Angeles,8.0,1109.0
@@ -634,7 +646,8 @@ Date,County,Duration,AcresBurned
 2017-07,Contra Costa,186.0,370.0
 2017-07,Yuba,186.0,50.0
 2017-07,El Dorado,182.0,13.0
-2017-07,"Monterey, San Luis Obispo",186.0,1816.0
+2017-07,San Luis Obispo,186.0,1816.0
+2017-07,Monterey,186.0,1816.0
 2017-07,Tehama,186.0,29.0
 2017-07,Kings,185.0,48889.0
 2017-07,Butte,184.0,166.0
@@ -829,9 +842,12 @@ Date,County,Duration,AcresBurned
 2017-10,Tehama,94.0,10.0
 2017-10,Humboldt,94.0,20.0
 2017-10,Butte,125.0,8417.0
-2017-10,"Napa, Solano",125.0,51624.0
-2017-10,"Napa, Sonoma",125.0,36807.0
-2017-10,"Napa, Sonoma",125.0,56556.0
+2017-10,Solano,125.0,51624.0
+2017-10,Napa,125.0,51624.0
+2017-10,Sonoma,125.0,36807.0
+2017-10,Napa,125.0,36807.0
+2017-10,Sonoma,125.0,56556.0
+2017-10,Napa,125.0,56556.0
 2017-10,Napa,94.0,0.0
 2017-10,Butte,124.0,6151.0
 2017-10,Yuba,125.0,9989.0
@@ -873,7 +889,8 @@ Date,County,Duration,AcresBurned
 2017-10,Stanislaus,84.0,13.0
 2017-12,Los Angeles,45.0,6049.0
 2017-12,Los Angeles,245.0,15619.0
-2017-12,"Santa Barbara, Ventura",40.0,281893.0
+2017-12,Ventura,40.0,281893.0
+2017-12,Santa Barbara,40.0,281893.0
 2017-12,Riverside,37.0,40.0
 2017-11,Tehama,69.0,43.0
 2017-11,Mono,58.0,370.0
@@ -1011,7 +1028,8 @@ Date,County,Duration,AcresBurned
 2018-06,Contra Costa,190.0,268.0
 2018-06,Santa Clara,190.0,70.0
 2018-06,San Bernardino,189.0,33.0
-2018-06,"Napa, Yolo",189.0,90288.0
+2018-06,Yolo,189.0,90288.0
+2018-06,Napa,189.0,90288.0
 2018-07,Riverside,185.0,63.0
 2018-07,Tehama,175.0,33.0
 2018-07,Madera,179.0,12.0
@@ -1069,7 +1087,8 @@ Date,County,Duration,AcresBurned
 2018-07,Santa Clara,167.0,320.0
 2018-07,Mendocino,168.0,67.0
 2018-07,Tulare,170.0,34.0
-2018-07,"Shasta, Trinity",39.0,229651.0
+2018-07,Trinity,39.0,229651.0
+2018-07,Shasta,39.0,229651.0
 2018-07,Los Angeles,166.0,128.0
 2018-07,Riverside,166.0,40.0
 2018-09,Lake,125.0,36.0
@@ -1086,11 +1105,17 @@ Date,County,Duration,AcresBurned
 2018-08,Mariposa,154.0,22.0
 2018-08,Alameda,154.0,30.0
 2018-08,Kern,155.0,2950.0
-2018-07,"Colusa, Glenn, Lake, Mendocino",162.0,410203.0
+2018-07,Mendocino,162.0,410203.0
+2018-07,Lake,162.0,410203.0
+2018-07,Glenn,162.0,410203.0
+2018-07,Colusa,162.0,410203.0
 2018-07,Tulare,162.0,100.0
-2018-07,"Colusa, Lake, Mendocino",162.0,48920.0
+2018-07,Mendocino,162.0,48920.0
+2018-07,Colusa,162.0,48920.0
+2018-07,Lake,162.0,48920.0
 2018-07,Kern,162.0,993.0
 2018-07,Lassen,162.0,18703.0
+2018-07,Siskiyou,174.0,38134.0
 2018-08,Tuolumne,157.0,36450.0
 2018-07,Inyo,158.0,338.0
 2018-07,Riverside,161.0,30.0
@@ -1140,7 +1165,8 @@ Date,County,Duration,AcresBurned
 2018-09,Santa Barbara,126.0,172.0
 2018-09,Modoc,125.0,15.0
 2018-08,San Bernardino,127.0,125.0
-2018-09,"Shasta, Trinity",122.0,63311.0
+2018-09,Shasta,122.0,63311.0
+2018-09,Trinity,122.0,63311.0
 2018-09,Lake,124.0,24.0
 2018-09,Placer,124.0,1120.0
 2018-09,El Dorado,123.0,150.0
@@ -1182,7 +1208,8 @@ Date,County,Duration,AcresBurned
 2018-11,Lassen,58.0,88.0
 2018-11,Solano,58.0,1500.0
 2018-11,Ventura,58.0,4531.0
-2018-11,"Los Angeles, Ventura",58.0,96949.0
+2018-11,Los Angeles,58.0,96949.0
+2018-11,Ventura,58.0,96949.0
 2019-01,Humboldt,15.0,30.0
 2018-11,Butte,37.0,0.0
 2018-11,Contra Costa,51.0,20.0
@@ -1262,7 +1289,6 @@ Date,County,Duration,AcresBurned
 2019-07,Riverside,6.0,80.0
 2019-07,Alameda,1.0,22.0
 2019-07,Riverside,1.0,96.0
-2019-07,State of Nevada,4.0,1165.0
 2019-07,Lassen,3.0,193.0
 2019-07,Ventura,2.0,131.0
 2019-07,Stanislaus,2.0,202.0
@@ -1289,7 +1315,6 @@ Date,County,Duration,AcresBurned
 2019-08,Lake,4.0,20.0
 2019-08,Tuolumne,1.0,21.0
 2019-08,Lassen,4.0,1020.0
-2019-08,State of Oregon,10.0,1301.0
 2019-08,Yolo,1.0,33.0
 2019-08,Riverside,1.0,20.0
 2019-08,Shasta,2.0,46.0
@@ -1307,7 +1332,7 @@ Date,County,Duration,AcresBurned
 2019-08,Lassen,4.0,131.0
 2019-08,Lassen,4.0,2438.0
 2019-08,Riverside,1.0,80.0
-2019-08,"Mexico, San Diego",4.0,25.0
+2019-08,San Diego,4.0,25.0
 2019-08,Riverside,1.0,12.0
 2019-08,Lassen,8.0,3380.0
 2019-08,Alameda,1.0,19.0
@@ -1356,7 +1381,8 @@ Date,County,Duration,AcresBurned
 2019-10,Santa Clara,1.0,29.0
 2019-10,Tehama,1.0,11.0
 2019-10,Alameda,1.0,12.0
-2019-10,"Monterey, San Luis Obispo",3.0,289.0
+2019-10,San Luis Obispo,3.0,289.0
+2019-10,Monterey,3.0,289.0
 2019-10,Tehama,1.0,68.0
 2019-10,Tehama,0.0,10.0
 2019-10,Contra Costa,1.0,40.0
@@ -1399,7 +1425,8 @@ Date,County,Duration,AcresBurned
 2020-02,Sierra,4.0,102.0
 2020-02,Tehama,2.0,75.0
 2020-02,Lassen,1.0,57.0
-2020-02,"Glenn, Mendocino",8.0,211.0
+2020-02,Mendocino,8.0,211.0
+2020-02,Glenn,8.0,211.0
 2020-03,Glenn,4.0,154.0
 2020-04,Imperial,9.0,275.0
 2020-04,Tehama,2.0,26.0
@@ -1467,7 +1494,6 @@ Date,County,Duration,AcresBurned
 2020-06,Stanislaus,2.0,202.0
 2020-06,San Luis Obispo,4.0,263.0
 2020-06,Mono,7.0,280.0
-2020-06,State of Nevada,10.0,2975.0
 2020-06,Merced,6.0,2192.0
 2020-06,San Luis Obispo,1.0,33.0
 2020-06,Lassen,1.0,12.0
@@ -1507,7 +1533,8 @@ Date,County,Duration,AcresBurned
 2020-07,San Bernardino,2.0,71.0
 2020-07,Madera,2.0,135.0
 2020-07,Mono,23.0,120.0
-2020-07,"Siskiyou, Modoc",28.0,83261.0
+2020-07,Siskiyou,28.0,83261.0
+2020-07,Modoc,28.0,83261.0
 2020-07,Riverside,2.0,145.0
 2020-07,Colusa,2.0,138.0
 2020-07,Riverside,4.0,250.0
@@ -1548,16 +1575,32 @@ Date,County,Duration,AcresBurned
 2020-08,San Luis Obispo,5.0,312.0
 2020-08,San Luis Obispo,2.0,20.0
 2020-08,Glenn,2.0,727.0
-2020-08,"Mendocino, Humboldt, Trinity, Tehama, Glenn, Lake, Colusa",88.0,1032648.0
+2020-08,Mendocino,88.0,1032648.0
+2020-08,Humboldt,88.0,1032648.0
+2020-08,Trinity,88.0,1032648.0
+2020-08,Tehama,88.0,1032648.0
+2020-08,Glenn,88.0,1032648.0
+2020-08,Lake,88.0,1032648.0
+2020-08,Colusa,88.0,1032648.0
 2020-08,Nevada,12.0,705.0
 2020-08,Glenn,3.0,275.0
 2020-08,El Dorado,3.0,14.0
-2020-08,"Santa Cruz, San Mateo",38.0,86509.0
-2020-08,"Santa Clara, Alameda, Contra Costa, San Joaquin, Stanislaus",45.0,396624.0
+2020-08,Santa Cruz,38.0,86509.0
+2020-08,San Mateo,38.0,86509.0
+2020-08,Santa Clara,45.0,396624.0
+2020-08,Alameda,45.0,396624.0
+2020-08,Contra Costa,45.0,396624.0
+2020-08,San Joaquin,45.0,396624.0
+2020-08,Stanislaus,45.0,396624.0
 2020-08,Mendocino,4.0,62.0
 2020-08,Mendocino,4.0,820.0
-2020-08,"Napa, Sonoma, Lake, Yolo, Solano",47.0,363220.0
-2020-08,"Tehama, Glenn",52.0,19609.0
+2020-08,Napa,47.0,363220.0
+2020-08,Sonoma,47.0,363220.0
+2020-08,Lake,47.0,363220.0
+2020-08,Yolo,47.0,363220.0
+2020-08,Solano,47.0,363220.0
+2020-08,Tehama,52.0,19609.0
+2020-08,Glenn,52.0,19609.0
 2020-08,Calaveras,1.0,55.0
 2020-08,Tuolumne,11.0,2857.0
 2020-08,San Diego,3.0,45.0
@@ -1568,7 +1611,8 @@ Date,County,Duration,AcresBurned
 2020-08,Los Angeles,3.0,290.0
 2020-08,Madera,1.0,688.0
 2020-09,Lake,2.0,13.0
-2020-09,"San Bernardino, Riverside",73.0,22744.0
+2020-09,San Bernardino,73.0,22744.0
+2020-09,Riverside,73.0,22744.0
 2020-09,San Diego,20.0,16390.0
 2020-09,Mendocino,8.0,1100.0
 2020-09,Yuba,6.0,1311.0
@@ -1578,8 +1622,10 @@ Date,County,Duration,AcresBurned
 2020-09,Fresno,59.0,1185.0
 2020-09,Siskiyou,15.0,2188.0
 2020-09,Santa Barbara,3.0,111.0
-2020-09,"Napa, Sonoma",24.0,67484.0
-2020-09,"Shasta, Tehama",17.0,56338.0
+2020-09,Napa,24.0,67484.0
+2020-09,Sonoma,24.0,67484.0
+2020-09,Shasta,17.0,56338.0
+2020-09,Tehama,17.0,56338.0
 2020-09,Los Angeles,3.0,230.0
 2020-09,Riverside,2.0,227.0
 2020-09,Amador,4.0,48.0
@@ -1708,13 +1754,16 @@ Date,County,Duration,AcresBurned
 2021-07,Tulare,6.0,100.0
 2021-07,Monterey,4.0,171.0
 2021-07,Plumas,11.0,85.0
-2021-07,"Shasta, Trinity, Tehama",49.0,122653.0
+2021-07,Shasta,49.0,122653.0
+2021-07,Trinity,49.0,122653.0
+2021-07,Tehama,49.0,122653.0
 2021-07,Calaveras,3.0,153.0
 2021-07,Los Angeles,2.0,340.0
 2021-08,Shasta,1.0,50.0
 2021-08,Los Angeles,14.0,50.0
 2021-08,Shasta,7.0,60.0
-2021-08,"Nevada, Placer",10.0,2619.0
+2021-08,Nevada,10.0,2619.0
+2021-08,Placer,10.0,2619.0
 2021-08,Shasta,7.0,20.0
 2021-08,Yuba,11.0,184.0
 2021-08,Lake,3.0,127.0
@@ -1728,7 +1777,8 @@ Date,County,Duration,AcresBurned
 2021-08,Riverside,4.0,160.0
 2021-08,Tuolumne,7.0,100.0
 2021-08,San Bernardino,6.0,50.0
-2021-08,"Riverside, San Diego",5.0,1427.0
+2021-08,Riverside,5.0,1427.0
+2021-08,San Diego,5.0,1427.0
 2021-08,San Bernardino,5.0,61.0
 2021-08,Humboldt,16.0,2421.0
 2021-08,Humboldt,10.0,16.0
@@ -1740,7 +1790,8 @@ Date,County,Duration,AcresBurned
 2021-09,Mendocino,9.0,257.0
 2021-09,Madera,1.0,42.0
 2021-09,San Bernardino,2.0,71.0
-2021-09,"Napa, Sonoma",2.0,116.0
+2021-09,Napa,2.0,116.0
+2021-09,Sonoma,2.0,116.0
 2021-09,Shasta,11.0,8578.0
 2021-10,Trinity,7.0,80.0
 2021-10,Tehama,2.0,24.0
