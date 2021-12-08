@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import time
 import os.path
-import webbrowser
+import link-button
 
 # ML dependency imports
 from sklearn.preprocessing import StandardScaler, MinMaxScaler
@@ -261,6 +261,7 @@ st.markdown("<hr>", unsafe_allow_html=True)
 # Create About Section
 # Init columns
 dev_col1, dev_col2, dev_col3 = st.columns(3)
+
 
 # Breanna About Column
 dev_col1.image("https://avatars.githubusercontent.com/u/83804429?v=4")
