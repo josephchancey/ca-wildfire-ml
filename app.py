@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import time
 import os.path
-import link-button
+import webbrowser
 
 # ML dependency imports
 from sklearn.preprocessing import StandardScaler, MinMaxScaler
