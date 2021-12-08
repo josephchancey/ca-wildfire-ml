@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import time
 import os.path
-from bokeh.models.widgets import Div
+import seaborn
 
 # ML dependency imports
 from sklearn.preprocessing import StandardScaler, MinMaxScaler
@@ -59,135 +59,165 @@ def main():
 
 def clean_fire():
 
-    # import fire data csv
-    fireFile = "./data/fire_data.csv"
+    if os.path.isfile("./data/clean/fire_data_clean.csv") == False:
+        # import fire data csv
+        fireFile = "./data/fire_data.csv"
 
-    # read the file and store in a data frame
-    fireData = pd.read_csv(fireFile)
-        
+        # read the file and store in a data frame
+        fireData = pd.read_csv(fireFile)
+                
         # remove extraneous columns
-    fireData = fireData[["incident_id","incident_name","incident_county","incident_acres_burned",
-                        "incident_dateonly_created","incident_dateonly_extinguished"]]
+        fireData = fireData[["incident_id","incident_name","incident_county","incident_acres_burned",
+                            "incident_dateonly_created","incident_dateonly_extinguished"]]
 
-    # rename columns
-    fireData = fireData.rename(columns={"incident_id":"ID","incident_name":"Name","incident_county":"County",
-                                        "incident_acres_burned":"AcresBurned","incident_dateonly_created":"Started",
-                                    "incident_dateonly_extinguished":"Extinguished"})
+            # rename columns
+        fireData = fireData.rename(columns={"incident_id":"ID","incident_name":"Name","incident_county":"County",
+                                            "incident_acres_burned":"AcresBurned","incident_dateonly_created":"Started",
+                                        "incident_dateonly_extinguished":"Extinguished"})
 
-    # check for duplicates, then drop ID column
-    fireData.drop_duplicates(subset=["ID"])
-    fireData = fireData[["Name","County","AcresBurned","Started","Extinguished"]]
+        # check for duplicates, then drop ID column
+        fireData.drop_duplicates(subset=["ID"])
+        fireData = fireData[["Name","County","AcresBurned","Started","Extinguished"]]
 
 
-    # create a column that contains the duration
-    # first convert date columns to datetime
-    fireData["Started"] = pd.to_datetime(fireData["Started"])
-    fireData["Extinguished"] = pd.to_datetime(fireData["Extinguished"])
+        # create a column that contains the duration
+        # first convert date columns to datetime
+        fireData["Started"] = pd.to_datetime(fireData["Started"])
+        fireData["Extinguished"] = pd.to_datetime(fireData["Extinguished"])
 
-    # subtract the dates
-    fireData["Duration"] = fireData["Extinguished"] - fireData["Started"]
+        # subtract the dates
+        fireData["Duration"] = fireData["Extinguished"] - fireData["Started"]
 
-    # convert duration to string and remove "days"
-    fireData["Duration"] = fireData["Duration"].astype(str)
-    fireData["Duration"] = fireData["Duration"].str.replace("days","")
+        # convert duration to string and remove "days"
+        fireData["Duration"] = fireData["Duration"].astype(str)
+        fireData["Duration"] = fireData["Duration"].str.replace("days","")
 
-    # replace NaT with NaN and convert back to float
-    fireData["Duration"] = fireData["Duration"].replace(["NaT"],"NaN")
-    fireData["Duration"] = fireData["Duration"].astype(float)
+        # replace NaT with NaN and convert back to float
+        fireData["Duration"] = fireData["Duration"].replace(["NaT"],"NaN")
+        fireData["Duration"] = fireData["Duration"].astype(float)
 
-    # add one day to duration to capture fires that started and were extinguished in the same day
-    fireData["Duration"] = fireData["Duration"] + 1
+        # add one day to duration to capture fires that started and were extinguished in the same day
+        fireData["Duration"] = fireData["Duration"] + 1
 
-    # create a column for year and filter for fires during or after 2013
-    fireData["Year"] = fireData["Started"].dt.year
-    fireData = fireData.loc[(fireData["Year"]>=2013),:]
+        # create a column for year and filter for fires during or after 2013
+        fireData["Year"] = fireData["Started"].dt.year
+        fireData = fireData.loc[(fireData["Year"]>=2013),:]
 
-    # create a column to hold the year and month of the start date
-    fireData["Date"] = fireData["Started"].apply(lambda x: x.strftime('%Y-%m'))
+        # create a column to hold the year and month of the start date
+        fireData["Date"] = fireData["Started"].apply(lambda x: x.strftime('%Y-%m'))
 
-    fireData = fireData[["Date", "County", "Duration", "AcresBurned"]]
+        fireData = fireData[["Date", "County", "Duration", "AcresBurned"]]
 
-    # drop nulls
-    fireData = fireData.dropna()
+        # drop nulls
+        fireData = fireData.dropna()
 
-    # reset the index
-    fireData.reset_index(inplace=True,drop=True)
+        # reset the index
+        fireData.reset_index(inplace=True,drop=True)
 
         # export as csv
-    fireData.to_csv("./data/clean/fire_data_clean.csv",index=False)
+        fireData.to_csv("./data/clean/fire_data_clean.csv",index=False)
 
-    return fireData
+        return fireData
+
+    else: 
+    # This prevents the cleaning from being ran each time this function is called, checks if cleaning is done already
+
+        fireData = pd.read_csv("./data/clean/fire_data_clean.csv")
+        return fireData
+
 
 
 def clean_percip():
 
-    # import precipitation data csv
-    precipFile = "./data/precip_data.csv"
 
-    # read the file and store in a data frame
-    precipData = pd.read_csv(precipFile)
-    
-    # remove extraneous columns
-    precipData = precipData[["Date","Location","Value"]]
+    if os.path.isfile("./data/clean/precip_data_clean.csv") == False:
 
-    # rename columns
-    precipData = precipData.rename(columns = {"Location":"County","Value":"Precip"})
+        # import precipitation data csv
+        precipFile = "./data/precip_data.csv"
 
-    # remove "county" from county column to be consistent with other datasets
-    precipData["County"] = precipData["County"].astype(str)
-    precipData["County"] = precipData["County"].str.replace(" County","")
+        # read the file and store in a data frame
+        precipData = pd.read_csv(precipFile)
+        
+        # remove extraneous columns
+        precipData = precipData[["Date","Location","Value"]]
 
-    # convert date column
-    precipData["Date"] = pd.to_datetime(precipData["Date"].astype(str), format='%Y%m')
+        # rename columns
+        precipData = precipData.rename(columns = {"Location":"County","Value":"Precip"})
 
-    # create a column for year and filter for data during or after 2013
-    precipData["Year"] = precipData["Date"].dt.year
-    precipData = precipData.loc[(precipData["Year"]>=2013),:]
+        # remove "county" from county column to be consistent with other datasets
+        precipData["County"] = precipData["County"].astype(str)
+        precipData["County"] = precipData["County"].str.replace(" County","")
 
-    # drop the year column
-    precipData = precipData[["Date","County","Precip"]]
+        # convert date column
+        precipData["Date"] = pd.to_datetime(precipData["Date"].astype(str), format='%Y%m')
 
-    # edit the date column to match the format of the other datasets
-    precipData["Date"] = precipData["Date"].apply(lambda x: x.strftime('%Y-%m'))
+        # create a column for year and filter for data during or after 2013
+        precipData["Year"] = precipData["Date"].dt.year
+        precipData = precipData.loc[(precipData["Year"]>=2013),:]
 
-    precipData = precipData.dropna()
-    precipData.reset_index(inplace=True,drop=True)
+        # drop the year column
+        precipData = precipData[["Date","County","Precip"]]
 
-    # export as csv
-    return precipData.to_csv("./data/clean/precip_data_clean.csv",index=False)
+        # edit the date column to match the format of the other datasets
+        precipData["Date"] = precipData["Date"].apply(lambda x: x.strftime('%Y-%m'))
+
+        precipData = precipData.dropna()
+        precipData.reset_index(inplace=True,drop=True)
+
+        # export as csv
+        precipData.to_csv("./data/clean/precip_data_clean.csv",index=False)
+
+        return precipData
+
+    else:
+        precipData = pd.read_csv("./data/clean/precip_data_clean.csv")
+        return precipData
+
+
+
+
 
 def clean_drought():
 
-    # import drought data csv
-    droughtFile = "./data/drought_data.csv"
+    if os.path.isfile("./data/clean/precip_data_clean.csv") == False:
 
-    # read the file and store in a dataframe
-    droughtData = pd.read_csv(droughtFile)
+        # import drought data csv
+        droughtFile = "./data/drought_data.csv"
 
-    droughtData = droughtData[["ValidStart","County","None","D0","D1","D2",
-                          "D3","D4"]]
+        # read the file and store in a dataframe
+        droughtData = pd.read_csv(droughtFile)
 
-    # rename columns
-    droughtData = droughtData.rename(columns={"ValidStart":"Date"})
+        droughtData = droughtData[["ValidStart","County","None","D0","D1","D2",
+                            "D3","D4"]]
 
-    # remove "county" from county column to be consistent with other datasets
-    droughtData["County"] = droughtData["County"].astype(str)
-    droughtData["County"] = droughtData["County"].str.replace(" County","")
+        # rename columns
+        droughtData = droughtData.rename(columns={"ValidStart":"Date"})
 
-    # edit the date column to match the format of the other datasets
-    droughtData["Date"] = pd.to_datetime(droughtData["Date"])
-    droughtData["Date"] = droughtData["Date"].apply(lambda x: x.strftime('%Y-%m'))
+        # remove "county" from county column to be consistent with other datasets
+        droughtData["County"] = droughtData["County"].astype(str)
+        droughtData["County"] = droughtData["County"].str.replace(" County","")
 
-    # drop nulls and reset the index
-    droughtData = droughtData.dropna()
-    droughtData.reset_index(inplace=True,drop=True)
+        # edit the date column to match the format of the other datasets
+        droughtData["Date"] = pd.to_datetime(droughtData["Date"])
+        droughtData["Date"] = droughtData["Date"].apply(lambda x: x.strftime('%Y-%m'))
 
-    # group by date and county and average the drought levels of each week to obtain a monthly summary
-    groupedDrought = droughtData.groupby(["Date","County"])
-    groupedDrought = groupedDrought.mean()
+        # drop nulls and reset the index
+        droughtData = droughtData.dropna()
+        droughtData.reset_index(inplace=True,drop=True)
 
-    # export as csv
-    groupedDrought.to_csv("./data/clean/drought_data_clean.csv")
+        # group by date and county and average the drought levels of each week to obtain a monthly summary
+        groupedDrought = droughtData.groupby(["Date","County"])
+        groupedDrought = groupedDrought.mean()
+
+        # export as csv
+        groupedDrought.to_csv("./data/clean/drought_data_clean.csv")
+
+        return groupedDrought
+    else:
+        
+        groupedDrought = pd.read_csv("./data/clean/drought_data_clean.csv")
+        return groupedDrought
+    
 
 
 def ml_model():
@@ -228,6 +258,13 @@ def ml_model():
     reg = LinearRegression().fit(X_train_scaled, y_train)
     reg_score_val = reg.score(X_test_scaled, y_test)
 
+    # JOE PLOTS
+    st.set_option('deprecation.showPyplotGlobalUse', False)
+
+    plt.scatter(X_train_scaled[:,0], y_train)
+    plt.plot(X_train_scaled, reg.predict(X_train_scaled))
+    st.pyplot()
+    # END JOE PLOTS
 
     lasso = Lasso().fit(X_train_scaled, y_train)
 
@@ -262,31 +299,27 @@ st.markdown("<hr>", unsafe_allow_html=True)
 # Init columns
 dev_col1, dev_col2, dev_col3 = st.columns(3)
 
-
 # Breanna About Column
 dev_col1.image("https://avatars.githubusercontent.com/u/83804429?v=4")
 dev_col1.header("Breanna S.")
-if dev_col1.button("Github Profile", key=999):
-    # webbrowser.open_new_tab("https://github.com/bre-sew")
-    js = "window.open('https://github.com/bre-sew')"  # New tab or window
-    html = '<img src onerror="{}">'.format(js)
-    div = Div(text=html)
-    st.bokeh_chart(div)
+if dev_col1.button("View Github Profile", key=999):
+    dev_col1.markdown("[Link to Breanna's Github](https://github.com/bre-sew)")
+
 
 # David About Column
 dev_col2.image("https://avatars.githubusercontent.com/u/85533882?v=4")
 dev_col2.header("David K.")
-if dev_col2.button("Github Profile", key=998):
+if dev_col2.button("View Github Profile", key=998):
     # webbrowser.open_new_tab("https://github.com/dkoski23")
-    st.warning("BUTTON PRESS")
+    dev_col2.markdown("[Link to David's Github](https://github.com/dkoski23)")
 
 # Joseph About Column
 
 dev_col3.image("https://avatars.githubusercontent.com/u/84075822?v=4")
 dev_col3.header("Joseph C.")
-if dev_col3.button("Github Profile", key=997):
+if dev_col3.button("View Github Profile", key=997):
     # webbrowser.open_new_tab("https://github.com/josephchancey")\
-    st.warning("BUTTON PRESS")
+    dev_col3.markdown("[Link to Joseph's Github](https://github.com/josephchancey)")
 
 
 st.write(""" This app was created by Breanna Sewell, David Koski, and Joseph Chancey. Breanna collected the data for this project, dedicating her
@@ -305,35 +338,36 @@ st.markdown("<hr>", unsafe_allow_html=True)
 # Data Pre-Cleaned section header
 st.header("The Data (Pre-Cleaning)")
 
-
-# TODO ADD DATA HERE
-
 st.write("Click the box below to get a view of all the data used in this project.")
 
 if st.checkbox('Show Calfire Wildfire Data'):
 
     st.write("This data comes from Calfire. It is a record of documented wildfires from 2013-2021." \
          "Here we can see a cleaned version of the data with only what will be fed into the machine learning algorith.")
+    
+    st.write("Do note that this is only the head of the data, rather than the full dataset.")
 
-    # clean_fire = pd.read_csv("data/clean/fire_data_clean.csv")  
-    st.dataframe(clean_fire())
+    st.dataframe(clean_fire().head())
+
+# --------------------------
+if st.checkbox('Show Precipitation Data'):
+
+    st.write("DESCRIPTION HERE")
+
+    st.write("Do note that this is only the head of the data, rather than the full dataset.")
+
+    st.dataframe(clean_percip().head())
+
+# --------------------------
+if st.checkbox('Show California Drought Data'):
+
+    st.write("DESCRIPTION HERE")
+
+    st.write("Do note that this is only the head of the data, rather than the full dataset.")
+
+    st.dataframe(clean_drought().head())
 
 
-# if st.checkbox('Show Precipitation Data'):
-
-#     st.write("This data comes from Calfire. It is a record of documented wildfires from 2013-2021." \
-#          "Here we can see a cleaned version of the data with only what will be fed into the machine learning algorith.")
-
-#     clean_fire = pd.read_csv("data/clean/precip_data_clean.csv")
-#     st.dataframe(clean_fire)
-
-# if st.checkbox('Show California Drought Data'):
-
-#     st.write("This data comes from Calfire. It is a record of documented wildfires from 2013-2021." \
-#      "Here we can see a cleaned version of the data with only what will be fed into the machine learning algorith.")
-
-#     clean_fire = pd.read_csv("data/clean/drought_data_clean.csv")
-#     st.dataframe(clean_fire)
 
 st.markdown("<hr>", unsafe_allow_html=True)
 
