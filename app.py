@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import time
 import os.path
-import webbrowser
+from bokeh.models.widgets import Div
 
 # ML dependency imports
 from sklearn.preprocessing import StandardScaler, MinMaxScaler
@@ -267,20 +267,26 @@ dev_col1, dev_col2, dev_col3 = st.columns(3)
 dev_col1.image("https://avatars.githubusercontent.com/u/83804429?v=4")
 dev_col1.header("Breanna S.")
 if dev_col1.button("Github Profile", key=999):
-    webbrowser.open_new_tab("https://github.com/bre-sew")
+    # webbrowser.open_new_tab("https://github.com/bre-sew")
+    js = "window.open('https://github.com/bre-sew')"  # New tab or window
+    html = '<img src onerror="{}">'.format(js)
+    div = Div(text=html)
+    st.bokeh_chart(div)
 
 # David About Column
 dev_col2.image("https://avatars.githubusercontent.com/u/85533882?v=4")
 dev_col2.header("David K.")
 if dev_col2.button("Github Profile", key=998):
-    webbrowser.open_new_tab("https://github.com/dkoski23")
+    # webbrowser.open_new_tab("https://github.com/dkoski23")
+    st.warning("BUTTON PRESS")
 
 # Joseph About Column
 
 dev_col3.image("https://avatars.githubusercontent.com/u/84075822?v=4")
 dev_col3.header("Joseph C.")
 if dev_col3.button("Github Profile", key=997):
-    webbrowser.open_new_tab("https://github.com/josephchancey")
+    # webbrowser.open_new_tab("https://github.com/josephchancey")\
+    st.warning("BUTTON PRESS")
 
 
 st.write(""" This app was created by Breanna Sewell, David Koski, and Joseph Chancey. Breanna collected the data for this project, dedicating her
