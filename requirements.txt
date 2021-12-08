@@ -1,13 +1,6 @@
 pyplot
-sklearn.datasets
+scikit-learn
 numpy
-sklearn.linear_model
-sklearn.model_selection
-sklearn.preprocessing
-sklearn.decomposition
-sklearn.manifold
 matplotlib.pyplot
-sklearn.cluster
-sklearn.ensemble
 pandas
 streamlit
