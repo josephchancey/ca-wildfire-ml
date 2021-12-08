@@ -1,11 +1,12 @@
 # Imports
 import streamlit as st
+import streamlit.components.v1 as components
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 import time
 import os.path
-
+import webbrowser
 
 # ML dependency imports
 from sklearn.preprocessing import StandardScaler, MinMaxScaler
@@ -16,11 +17,10 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.datasets import make_regression
 from sklearn.linear_model import LinearRegression, Lasso
 from sklearn.model_selection import train_test_split
+from streamlit.type_util import Key
 
 # Page Settings
-st.set_page_config(page_title="California Wildfire ML", page_icon="img/fav.png", initial_sidebar_state="collapsed")
-
-
+st.set_page_config(page_title="California Wildfire ML", page_icon="./img/fav.png", initial_sidebar_state="collapsed")
 
 #"""
 #--------------------------
@@ -253,12 +253,40 @@ st.markdown("<h1 style='text-align: center;'>California Wildfire Unsupervised Ma
 
 # Brief description of the web app
 st.write("This machine learning (ML) model takes historical wildfire, drought, & precipitation data from 2013-2021" \
-    " and is trained to predict the likelyhood of a wildfire given specific percipitation/drough" \
+    " and is trained to predict the likelyhood of a wildfire given specific percipitation/drought" \
         " conditions within California.")
 
-# Image of developers w/ a caption to put image into context
-st.image("img/developers_img.png", caption="This app was created by Breanna Sewell, David Koski, and Joseph Chancey.")
+st.markdown("<hr>", unsafe_allow_html=True)
 
+# Create About Section
+# Init columns
+dev_col1, dev_col2, dev_col3 = st.columns(3)
+
+# Breanna About Column
+dev_col1.image("https://avatars.githubusercontent.com/u/83804429?v=4")
+dev_col1.header("Breanna S.")
+if dev_col1.button("Github Profile", key=999):
+    webbrowser.open_new_tab("https://github.com/bre-sew")
+
+# David About Column
+dev_col2.image("https://avatars.githubusercontent.com/u/85533882?v=4")
+dev_col2.header("David K.")
+if dev_col2.button("Github Profile", key=998):
+    webbrowser.open_new_tab("https://github.com/dkoski23")
+
+# Joseph About Column
+
+dev_col3.image("https://avatars.githubusercontent.com/u/84075822?v=4")
+dev_col3.header("Joseph C.")
+if dev_col3.button("Github Profile", key=997):
+    webbrowser.open_new_tab("https://github.com/josephchancey")
+
+
+st.write(""" This app was created by Breanna Sewell, David Koski, and Joseph Chancey. Breanna collected the data for this project, dedicating her
+time to cleaning and ensuring the data was ML ready. David pre-processed the data to prepare for ML training and then trained the ML model with that data.
+Joseph collected this work and converted it into a Python script and turned it into a Streamlit application. """)
+
+st.markdown("<hr>", unsafe_allow_html=True)
 
 
 #"""
@@ -267,8 +295,11 @@ st.image("img/developers_img.png", caption="This app was created by Breanna Sewe
 #--------------------------
 #"""
 
-# Data section header
-st.header("The Data (Collection & Cleaning)")
+# Data Pre-Cleaned section header
+st.header("The Data (Pre-Cleaning)")
+
+
+# TODO ADD DATA HERE
 
 st.write("Click the box below to get a view of all the data used in this project.")
 
@@ -297,8 +328,14 @@ if st.checkbox('Show Calfire Wildfire Data'):
 #     clean_fire = pd.read_csv("data/clean/drought_data_clean.csv")
 #     st.dataframe(clean_fire)
 
+st.markdown("<hr>", unsafe_allow_html=True)
 
 
+
+# Data Post-Cleaned section header
+st.header("The Data (Post-Cleaning)")
+# TODO ADD POST CLEANED DATA HERE
+st.markdown("<hr>", unsafe_allow_html=True)
 
 
 #""" TODO
@@ -307,6 +344,10 @@ if st.checkbox('Show Calfire Wildfire Data'):
 #------------------------------
 #"""
 
+# Data get_dummies & type checking
+st.header("ML Data Pre-Processing")
+# TODO ADD POST CLEANED DATA HERE
+st.markdown("<hr>", unsafe_allow_html=True)
 
 
 #""" TODO
@@ -315,12 +356,31 @@ if st.checkbox('Show Calfire Wildfire Data'):
 #---------------------------
 #"""
 
+# Lasso and Lin-Reg Models 
+st.header("ML Models")
+# TODO ADD POST CLEANED DATA HERE
+st.markdown("<hr>", unsafe_allow_html=True)
+
+
 
 #""" TODO
 #--------------------------------
 #------ CONCLUSION SECTION ------
 #--------------------------------
 #"""
+
+# Conclusion Summary
+st.header("Summary")
+# TODO ADD POST CLEANED DATA HERE
+st.markdown("<hr>", unsafe_allow_html=True)
+
+
+# # Data Post-Cleaned section header
+# st.header("Interested?")
+# # TODO ADD POST CLEANED DATA HERE
+# st.markdown("<hr>", unsafe_allow_html=True)
+
+
 
 if __name__ == "__main__":
     main()
