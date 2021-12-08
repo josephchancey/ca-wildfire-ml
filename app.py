@@ -4,6 +4,9 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 import time
+import os.path
+import webbrowser
+
 
 # ML dependency imports
 from sklearn.preprocessing import StandardScaler, MinMaxScaler
@@ -16,7 +19,8 @@ from sklearn.linear_model import LinearRegression, Lasso
 from sklearn.model_selection import train_test_split
 
 # Page Settings
-st.set_page_config(page_title="California Wildfire ML", page_icon="img/fav.png")
+st.set_page_config(page_title="California Wildfire ML", page_icon="img/fav.png", initial_sidebar_state="collapsed")
+
 
 
 #"""
@@ -26,16 +30,34 @@ st.set_page_config(page_title="California Wildfire ML", page_icon="img/fav.png")
 #"""
 
 def main():
-    
-    print("WERE IN MAIN FUNCTION")
-    print("CLEANING FIRE")
-    clean_fire()
-    print("CLEANING DROUGHT")
-    clean_drought()
-    print("CLEANING RAIN")
-    clean_percip()
-    print("ML")
-    ml_model()
+
+    print("IN MAIN")
+
+    # If data has not been cleaned, then clean it 
+    if os.path.isfile("./data/clean/fire_data_clean.csv") == False:
+        print("CLEANING FIRE")
+        clean_fire()
+
+    if os.path.isfile("./data/clean/drought_data_clean.csv") == False:
+        print("CLEANING DROUGHT")
+        clean_drought()
+
+    if os.path.isfile("./data/clean/precip_data_clean.csv") == False:
+        print("CLEANING RAIN")
+        clean_percip()
+
+    # Init sidebar with header text
+    st.sidebar.header("Menu")
+
+    # Add button that calls ml_model function - generating model
+    if st.sidebar.button("Run Machine Learning Model"):
+        ml_model()
+
+    # Add URL for github repository
+    if st.sidebar.button("View on GitHub"):
+        webbrowser.open('https://github.com/josephchancey/ca-wildfire-ml')
+
+
 
 def clean_fire():
 
@@ -94,7 +116,9 @@ def clean_fire():
     fireData.reset_index(inplace=True,drop=True)
 
         # export as csv
-    return fireData.to_csv("./data/clean/fire_data_clean.csv",index=False)
+    fireData.to_csv("./data/clean/fire_data_clean.csv",index=False)
+
+    return fireData
 
 
 def clean_percip():
@@ -170,6 +194,7 @@ def clean_drought():
 
 def ml_model():
 
+    print("MODEL RAN")
     # import fire data
     fireFile = "./data/clean/fire_data_clean.csv"
     fireData = pd.read_csv(fireFile)
@@ -210,7 +235,9 @@ def ml_model():
 
     lasso_score_val = lasso.score(X_test_scaled, y_test)
 
+    st.write("The score of our Lasso Model is: ")
     st.write(lasso_score_val)
+    st.write("The score of our Linear Regression Model is: ")
     st.write(reg_score_val)
     
     return reg_score_val, lasso_score_val
@@ -243,23 +270,34 @@ st.image("img/developers_img.png", caption="This app was created by Breanna Sewe
 #"""
 
 # Data section header
-st.header("The Data")
+st.header("The Data (Collection & Cleaning)")
 
 st.write("Click the box below to get a view of all the data used in this project.")
 
-if st.checkbox('Show Data'):
+if st.checkbox('Show Calfire Wildfire Data'):
 
     st.write("This data comes from Calfire. It is a record of documented wildfires from 2013-2021." \
          "Here we can see a cleaned version of the data with only what will be fed into the machine learning algorith.")
 
-    clean_fire = pd.read_csv("data/clean/fire_data_clean.csv")
-    st.dataframe(clean_fire.head())
+    # clean_fire = pd.read_csv("data/clean/fire_data_clean.csv")  
+    st.dataframe(clean_fire())
 
-    clean_fire = pd.read_csv("data/clean/precip_data_clean.csv")
-    st.dataframe(clean_fire.head())
 
-    clean_fire = pd.read_csv("data/clean/drought_data_clean.csv")
-    st.dataframe(clean_fire.head())
+# if st.checkbox('Show Precipitation Data'):
+
+#     st.write("This data comes from Calfire. It is a record of documented wildfires from 2013-2021." \
+#          "Here we can see a cleaned version of the data with only what will be fed into the machine learning algorith.")
+
+#     clean_fire = pd.read_csv("data/clean/precip_data_clean.csv")
+#     st.dataframe(clean_fire)
+
+# if st.checkbox('Show California Drought Data'):
+
+#     st.write("This data comes from Calfire. It is a record of documented wildfires from 2013-2021." \
+#      "Here we can see a cleaned version of the data with only what will be fed into the machine learning algorith.")
+
+#     clean_fire = pd.read_csv("data/clean/drought_data_clean.csv")
+#     st.dataframe(clean_fire)
 
 
 
