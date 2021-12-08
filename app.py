@@ -375,7 +375,36 @@ st.markdown("<hr>", unsafe_allow_html=True)
 
 # Data Post-Cleaned section header
 st.header("The Data (Post-Cleaning)")
-# TODO ADD POST CLEANED DATA HERE
+
+if st.checkbox('Show Clean Calfire Wildfire Data'):
+
+    st.metric(label="Columns", value="12", delta="-3")
+
+    st.write("This data comes from Calfire. It is a record of documented wildfires from 2013-2021." \
+         "Here we can see a cleaned version of the data with only what will be fed into the machine learning algorith.")
+    
+    st.write("Do note that this is only the head of the data, rather than the full dataset.")
+
+    st.dataframe(clean_fire().head())
+
+# --------------------------
+if st.checkbox('Show Clean Precipitation Data'):
+
+    st.write("DESCRIPTION HERE")
+
+    st.write("Do note that this is only the head of the data, rather than the full dataset.")
+
+    st.dataframe(clean_percip().head())
+
+# --------------------------
+if st.checkbox('Show Clean California Drought Data'):
+
+    st.write("DESCRIPTION HERE")
+
+    st.write("Do note that this is only the head of the data, rather than the full dataset.")
+
+    st.dataframe(clean_drought().head())
+
 st.markdown("<hr>", unsafe_allow_html=True)
 
 
@@ -387,7 +416,9 @@ st.markdown("<hr>", unsafe_allow_html=True)
 
 # Data get_dummies & type checking
 st.header("ML Data Pre-Processing")
-# TODO ADD POST CLEANED DATA HERE
+
+st.code("masterML = pd.get_dummies(masterMerge)")
+
 st.markdown("<hr>", unsafe_allow_html=True)
 
 
@@ -421,6 +452,10 @@ st.markdown("<hr>", unsafe_allow_html=True)
 # # TODO ADD POST CLEANED DATA HERE
 # st.markdown("<hr>", unsafe_allow_html=True)
 
+# Thank you celebration button
+col1, col2, col3, col4, col5 = st.columns(5)
+if col3.button('Thank You!'):
+    st.balloons()
 
 
 if __name__ == "__main__":
