@@ -56,6 +56,18 @@ def main():
     st.sidebar.write("[View on GitHub](https://github.com/josephchancey/ca-wildfire-ml)")
 
 
+def old_fire_dataset():
+    unclean_fire = pd.read_csv("./data/fire_data.csv")
+    return unclean_fire
+
+def old_precip_dataset():
+    unclean_precip = pd.read_csv("./data/precip_data.csv")
+    return unclean_precip
+
+def old_drought_dataset():
+    unclean_drought = pd.read_csv("./data/drought_data.csv")
+    return unclean_drought
+
 
 def clean_fire():
 
@@ -342,30 +354,43 @@ st.write("Click the box below to get a view of all the data used in this project
 
 if st.checkbox('Show Calfire Wildfire Data'):
 
+    fire_col1, fire_col2, fire_col3 = st.columns(3)
+    fire_col1.metric(label="Columns", value="23")
+    fire_col2.metric(label="Rows", value="1967")
+
     st.write("This data comes from Calfire. It is a record of documented wildfires from 2013-2021." \
          "Here we can see a cleaned version of the data with only what will be fed into the machine learning algorith.")
     
     st.write("Do note that this is only the head of the data, rather than the full dataset.")
 
-    st.dataframe(clean_fire().head())
+    st.dataframe(old_fire_dataset().head())
 
 # --------------------------
 if st.checkbox('Show Precipitation Data'):
 
+    prec_col1, prec_col2, prec_col3 = st.columns(3)
+    prec_col1.metric(label="Columns", value="7")
+    prec_col2.metric(label="Rows", value="88276")
+
     st.write("DESCRIPTION HERE")
 
     st.write("Do note that this is only the head of the data, rather than the full dataset.")
 
-    st.dataframe(clean_percip().head())
+    st.dataframe(old_precip_dataset().head())
 
 # --------------------------
 if st.checkbox('Show California Drought Data'):
 
+
+    drought_col1, drought_col2, drought_col3 = st.columns(3)
+    drought_col1.metric(label="Columns", value="13")
+    drought_col2.metric(label="Rows", value="27028")
+
     st.write("DESCRIPTION HERE")
 
     st.write("Do note that this is only the head of the data, rather than the full dataset.")
 
-    st.dataframe(clean_drought().head())
+    st.dataframe(old_drought_dataset().head())
 
 
 
@@ -378,7 +403,9 @@ st.header("The Data (Post-Cleaning)")
 
 if st.checkbox('Show Clean Calfire Wildfire Data'):
 
-    st.metric(label="Columns", value="12", delta="-3")
+    fire_col1, fire_col2, fire_col3 = st.columns(3)
+    fire_col1.metric(label="Columns", value="4", delta="-19")
+    fire_col2.metric(label="Rows", value="1800", delta="-167")
 
     st.write("This data comes from Calfire. It is a record of documented wildfires from 2013-2021." \
          "Here we can see a cleaned version of the data with only what will be fed into the machine learning algorith.")
@@ -390,6 +417,10 @@ if st.checkbox('Show Clean Calfire Wildfire Data'):
 # --------------------------
 if st.checkbox('Show Clean Precipitation Data'):
 
+    prec_col1, prec_col2, prec_col3 = st.columns(3)
+    prec_col1.metric(label="Columns", value="3", delta="-7")
+    prec_col2.metric(label="Rows", value="6148", delta="-82,128")
+
     st.write("DESCRIPTION HERE")
 
     st.write("Do note that this is only the head of the data, rather than the full dataset.")
@@ -398,6 +429,10 @@ if st.checkbox('Show Clean Precipitation Data'):
 
 # --------------------------
 if st.checkbox('Show Clean California Drought Data'):
+
+    drought_col1, drought_col2, drought_col3 = st.columns(3)
+    drought_col1.metric(label="Columns", value="6", delta="-4")
+    drought_col2.metric(label="Rows", value="6206", delta="-20,822")
 
     st.write("DESCRIPTION HERE")
 
