@@ -5,7 +5,6 @@ import matplotlib.pyplot as plt
 import numpy as np
 import time
 import os.path
-import webbrowser
 
 
 # ML dependency imports
@@ -54,8 +53,7 @@ def main():
         ml_model()
 
     # Add URL for github repository
-    if st.sidebar.button("View on GitHub"):
-        webbrowser.open('https://github.com/josephchancey/ca-wildfire-ml')
+    st.sidebar.write("[View on GitHub](https://github.com/josephchancey/ca-wildfire-ml)")
 
 
 
