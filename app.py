@@ -308,6 +308,142 @@ def lasso_model():
     return lasso_score_val
 
 
+def random_forest():
+
+    
+    # import fire data
+    fireFile = "./data/clean/fire_data_clean.csv"
+    fireData = pd.read_csv(fireFile)
+
+    droughtFile = "./data/clean/drought_data_clean.csv"
+    droughtData = pd.read_csv(droughtFile)
+
+    precipFile = "./data/clean/precip_data_clean.csv"
+    precipData = pd.read_csv(precipFile)
+
+    droughtMerged = pd.merge(droughtData, fireData, on = ["Date", "County"])
+    precipMerged = pd.merge(precipData, fireData, on = ["Date","County"])
+    masterMerge = pd.merge(droughtMerged, precipData, on = ["Date","County"])
+
+    masterML = pd.get_dummies(masterMerge)
+    masterML.drop(columns='None', inplace=True)
+
+    df = masterML
+    
+    X = df
+    y = df["AcresBurned"]
+
+    X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=1)
+    scaler = StandardScaler().fit(X_train)
+
+    X_train_scaled = scaler.transform(X_train)
+
+    X_test_scaled = scaler.transform(X_test)
+
+    clf = RandomForestClassifier()
+    clf.fit(X_train, y_train)
+    clf.score(X_train, y_train)
+    random_forest_val = clf.score(X_test, y_test)
+
+    return random_forest_val
+
+
+def plot_rnd_frst():
+
+        
+    # import fire data
+    fireFile = "./data/clean/fire_data_clean.csv"
+    fireData = pd.read_csv(fireFile)
+
+    droughtFile = "./data/clean/drought_data_clean.csv"
+    droughtData = pd.read_csv(droughtFile)
+
+    precipFile = "./data/clean/precip_data_clean.csv"
+    precipData = pd.read_csv(precipFile)
+
+    droughtMerged = pd.merge(droughtData, fireData, on = ["Date", "County"])
+    precipMerged = pd.merge(precipData, fireData, on = ["Date","County"])
+    masterMerge = pd.merge(droughtMerged, precipData, on = ["Date","County"])
+
+    masterML = pd.get_dummies(masterMerge)
+    masterML.drop(columns='None', inplace=True)
+
+    df = masterML
+    
+    X = df
+    y = df["AcresBurned"]
+
+    X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=1)
+    scaler = StandardScaler().fit(X_train)
+
+    X_train_scaled = scaler.transform(X_train)
+
+    X_test_scaled = scaler.transform(X_test)
+
+    clf = RandomForestClassifier()
+    clf.fit(X_train, y_train)
+    clf.score(X_train, y_train)
+    random_forest_val = clf.score(X_test, y_test)
+
+    plt.scatter(list(X_test["Precip"]), list(y_test.values), c="Green", label="Training Data")
+    plt.scatter(list(X_test["Precip"]), clf.predict(X_test), c="Red", label="Prediction")
+    plt.legend()
+    #plt.hlines(y=0, xmin=y.min(), xmax=y.max())
+    plt.title("Random Forest Model Predictions")
+
+    return plt
+
+
+def plot_lin_reg():
+    
+    print("MODEL RAN")
+    # import fire data
+    fireFile = "./data/clean/fire_data_clean.csv"
+    fireData = pd.read_csv(fireFile)
+
+    droughtFile = "./data/clean/drought_data_clean.csv"
+    droughtData = pd.read_csv(droughtFile)
+
+    precipFile = "./data/clean/precip_data_clean.csv"
+    precipData = pd.read_csv(precipFile)
+
+    droughtMerged = pd.merge(droughtData, fireData, on = ["Date", "County"])
+    precipMerged = pd.merge(precipData, fireData, on = ["Date","County"])
+    masterMerge = pd.merge(droughtMerged, precipData, on = ["Date","County"])
+
+    droughtML = pd.get_dummies(droughtMerged)
+    precipML = pd.get_dummies(precipMerged)
+    masterML = pd.get_dummies(masterMerge)
+    masterML.drop(columns='None', inplace=True)
+
+
+    df = masterML
+    
+    X = df
+    y = df["AcresBurned"]
+
+    X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=1)
+    scaler = StandardScaler().fit(X_train)
+
+    X_train_scaled = scaler.transform(X_train)
+
+    X_test_scaled = scaler.transform(X_test)
+
+    reg = LinearRegression().fit(X_train_scaled, y_train)
+    reg_score_val = reg.score(X_test_scaled, y_test)
+
+    
+    plt.cla()
+    plt.scatter(list(X_test["Precip"]), list(y_test.values), c="Green", label="Training Data")
+    plt.scatter(list(X_test["Precip"]), reg.predict(X_test), c="Red", label="Predictions")
+    plt.legend()
+    #plt.hlines(y=0, xmin=y.min(), xmax=y.max())
+    plt.title("Linear Regression Model")
+
+
+    return plt
+
+
 
 #"""
 #--------------------------
@@ -320,7 +456,7 @@ st.markdown("<h1 style='text-align: center;'>California Wildfire Unsupervised Ma
 
 # Brief description of the web app
 st.write("This machine learning (ML) model takes historical wildfire, drought, & precipitation data from 2013-2021" \
-    " and is trained to predict the likelyhood of a wildfire given specific percipitation/drought" \
+    " and is trained to predict the likelihood of a wildfire given specific percipitation/drought" \
         " conditions within California.")
 
 st.markdown("<hr>", unsafe_allow_html=True)
@@ -377,7 +513,7 @@ if st.checkbox('Show Calfire Wildfire Data'):
     fire_col2.metric(label="Rows", value="1967")
 
     st.write("This data comes from Calfire. It is a record of documented wildfires from 2013-2021." \
-         "Here we can see a cleaned version of the data with only what will be fed into the machine learning algorith.")
+         "Here we can see a cleaned version of the data with only what will be fed into the machine learning algorithm.")
     
     st.write("Do note that this is only the head of the data, rather than the full dataset.")
 
@@ -538,9 +674,9 @@ lasso.score(X_test_scaled, y_test) # test data
 """)
 
 
-st.write(f'Linear Regression Model Score: `{lin_model()}`')
+st.write(f'**Linear Regression** Model Score: `{lin_model()}`')
 
-st.write(f'Lasso Model Score: `{lasso_model()}`')
+st.write(f'**Lasso** Model Score: `{lasso_model()}`')
 
 st.markdown("<hr>", unsafe_allow_html=True)
 # END OF ML MODEL SECTION
@@ -551,15 +687,59 @@ st.header("Hmmm, What Happened?")
 
 st.write(f"""
 As we can see, a
-Linear Regression model score of `{round(lin_model(), 4)}` is likely not something we can trust. 
+Linear Regression model score of `{round(lin_model(), 7)}` is likely not something we can trust. 
 The same goes for the Lasso model score of `{round(lasso_model(), 7)}`. 
 
-These models seem to be victim to *Overfitting*.
+These models seem to be victim to *Overfitting* with our dataset. 
 
-Let's try this again, but use different models. We can compare the results and come to some meaningful
+Let's try this again, but use a different model. We can compare the results and come to some meaningful
 conclusions.
-
 """)
+
+st.header("Adding Another Model")
+
+if st.checkbox("Run Random Forest Classification Model"):
+
+    st.write(f"""
+    **Random Forest Classification** will be our third model. Below, you can see
+    the code for our implementation.
+    """)
+
+    st.code("""
+    # Random Forest Model
+    from sklearn.ensemble import RandomForestClassifier
+    clf = RandomForestClassifier()
+    clf.fit(X_train, y_train)
+    """)
+
+    st.write(f"**Random Forest Classification** gave us a score of `{round(random_forest(), 7)}`.")
+    st.write("""This score reflects the opposite of what our previous models were doing. Rather than
+    memorizing the data and being victim to overfitting, Random Forest is wildly innacurate for our data.""")
+
+    st.markdown("<hr>", unsafe_allow_html=True)
+
+    # New Section 
+    st.header("Comparing Results")
+
+    st.write(f"""
+    After testing three different models and getting different reactions from each, to better understand 
+    what is going on we need to visualize the predictions.
+    """)
+
+    col1, col2 = st.columns(2)
+
+
+    col1.pyplot(plot_rnd_frst())
+    col1.write("Random Forest Model Predictions")
+
+    col2.pyplot(plot_lin_reg())
+    col2.write("Linear Regression Model Predictions")
+
+    st.write("""
+    Here, we can start to get an idea of just how overfitted our Linear Regression model is, as well as how 
+    poorly our Random Forest model performs.
+    """)
+
 
 st.markdown("<hr>", unsafe_allow_html=True)
 # END OF WHAT HAPPENED SECTION
@@ -572,7 +752,19 @@ st.markdown("<hr>", unsafe_allow_html=True)
 
 # Conclusion Summary
 st.header("Summary")
-# TODO ADD POST CLEANED DATA HERE
+
+st.write("""
+From all of this, we can conclude that the Linear Regression model and Lasso model are susceptible 
+to overfitting with our data. The Random Forest classification model was wildly innacurate, but did 
+not suffer from overfitting.
+""")
+
+# st.subheader("Linear Regression")
+
+# st.subheader("Lasso")
+
+# st.subheader("Random Forest")
+
 st.markdown("<hr>", unsafe_allow_html=True)
 
 
