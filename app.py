@@ -418,7 +418,7 @@ if st.checkbox('Show Clean Calfire Wildfire Data'):
 if st.checkbox('Show Clean Precipitation Data'):
 
     prec_col1, prec_col2, prec_col3 = st.columns(3)
-    prec_col1.metric(label="Columns", value="3", delta="-7")
+    prec_col1.metric(label="Columns", value="3", delta="-4")
     prec_col2.metric(label="Rows", value="6148", delta="-82,128")
 
     st.write("DESCRIPTION HERE")
@@ -431,7 +431,7 @@ if st.checkbox('Show Clean Precipitation Data'):
 if st.checkbox('Show Clean California Drought Data'):
 
     drought_col1, drought_col2, drought_col3 = st.columns(3)
-    drought_col1.metric(label="Columns", value="6", delta="-4")
+    drought_col1.metric(label="Columns", value="8", delta="-5")
     drought_col2.metric(label="Rows", value="6206", delta="-20,822")
 
     st.write("DESCRIPTION HERE")
@@ -452,6 +452,17 @@ st.markdown("<hr>", unsafe_allow_html=True)
 # Data get_dummies & type checking
 st.header("ML Data Pre-Processing")
 
+st.write("This code was used to check for null values in each dataset once more.")
+st.code("""
+
+# find null values
+for column in droughtMerged.columns:
+    print(f"Column {column} has {droughtMerged[column].isnull().sum()}
+    null values")
+
+""")
+
+st.write("using pandas for `get_dummies` to encoude the dataframe.")
 st.code("masterML = pd.get_dummies(masterMerge)")
 
 st.markdown("<hr>", unsafe_allow_html=True)
