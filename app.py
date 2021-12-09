@@ -45,15 +45,11 @@ def main():
         print("CLEANING RAIN")
         clean_percip()
 
-    # Init sidebar with header text
-    st.sidebar.header("Menu")
+    # # Init sidebar with header text
+    # st.sidebar.header("Menu")
 
-    # Add button that calls ml_model function - generating model
-    if st.sidebar.button("Run Machine Learning Model"):
-        ml_model()
-
-    # Add URL for github repository
-    st.sidebar.write("[View on GitHub](https://github.com/josephchancey/ca-wildfire-ml)")
+    # # Add URL for github repository
+    # st.sidebar.write("[View on GitHub](https://github.com/josephchancey/ca-wildfire-ml)")
 
 
 def old_fire_dataset():
@@ -232,7 +228,7 @@ def clean_drought():
     
 
 
-def ml_model():
+def lin_model():
 
     print("MODEL RAN")
     # import fire data
@@ -269,25 +265,47 @@ def ml_model():
 
     reg = LinearRegression().fit(X_train_scaled, y_train)
     reg_score_val = reg.score(X_test_scaled, y_test)
+    
+    return reg_score_val
 
-    # JOE PLOTS
-    st.set_option('deprecation.showPyplotGlobalUse', False)
 
-    plt.scatter(X_train_scaled[:,0], y_train)
-    plt.plot(X_train_scaled, reg.predict(X_train_scaled))
-    st.pyplot()
-    # END JOE PLOTS
+def lasso_model():
+
+    # import fire data
+    fireFile = "./data/clean/fire_data_clean.csv"
+    fireData = pd.read_csv(fireFile)
+
+    droughtFile = "./data/clean/drought_data_clean.csv"
+    droughtData = pd.read_csv(droughtFile)
+
+    precipFile = "./data/clean/precip_data_clean.csv"
+    precipData = pd.read_csv(precipFile)
+
+    droughtMerged = pd.merge(droughtData, fireData, on = ["Date", "County"])
+    precipMerged = pd.merge(precipData, fireData, on = ["Date","County"])
+    masterMerge = pd.merge(droughtMerged, precipData, on = ["Date","County"])
+
+    masterML = pd.get_dummies(masterMerge)
+    masterML.drop(columns='None', inplace=True)
+
+    df = masterML
+    
+    X = df
+    y = df["AcresBurned"]
+
+    X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=1)
+    scaler = StandardScaler().fit(X_train)
+
+    X_train_scaled = scaler.transform(X_train)
+
+    X_test_scaled = scaler.transform(X_test)
+
 
     lasso = Lasso().fit(X_train_scaled, y_train)
 
     lasso_score_val = lasso.score(X_test_scaled, y_test)
 
-    st.write("The score of our Lasso Model is: ")
-    st.write(lasso_score_val)
-    st.write("The score of our Linear Regression Model is: ")
-    st.write(reg_score_val)
-    
-    return reg_score_val, lasso_score_val
+    return lasso_score_val
 
 
 
@@ -452,23 +470,38 @@ st.markdown("<hr>", unsafe_allow_html=True)
 # Data get_dummies & type checking
 st.header("ML Data Pre-Processing")
 
-st.write("This code was used to check for null values in each dataset once more.")
+st.write("Merging the clean data into one training dataset.")
 st.code("""
+# merge the drought, precipitation, and fire data
+masterMerge = pd.merge(droughtMerged, precipData, on = ["Date","County"])
+masterMerge
+""")
 
+
+st.write("This loop was used to check for null values in the final merged dataset.")
+st.code("""
 # find null values
-for column in droughtMerged.columns:
-    print(f"Column {column} has {droughtMerged[column].isnull().sum()}
+for column in masterMerge.columns:
+    print(f"Column {column} has {masterMerge[column].isnull().sum()}
     null values")
-
+""")
+st.write("Ensure datatypes are correct with `.dtypes`.")
+# Code for checking datatypes
+st.code("""
+# check the data types
+masterMerge.dtypes
 """)
 
 st.write("using pandas for `get_dummies` to encoude the dataframe.")
-st.code("masterML = pd.get_dummies(masterMerge)")
+st.code("""
+# Get dummy data
+masterML = pd.get_dummies(masterMerge)
+""")
 
 st.markdown("<hr>", unsafe_allow_html=True)
 
 
-#""" TODO
+#"""
 #---------------------------
 #------ MODEL SECTION ------
 #---------------------------
@@ -476,12 +509,62 @@ st.markdown("<hr>", unsafe_allow_html=True)
 
 # Lasso and Lin-Reg Models 
 st.header("ML Models")
-# TODO ADD POST CLEANED DATA HERE
+
+st.write("He we assign our variables to begin testing and training.")
+st.code("""
+# Assign data
+X = df
+y = df["AcresBurned"]
+""")
+
+st.write("Here we scale the data before fitting it to models.")
+st.code("""
+# Scale the data
+X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=1)
+scaler = StandardScaler().fit(X_train)
+X_train_scaled = scaler.transform(X_train)
+X_test_scaled = scaler.transform(X_test)
+""")
+
+st.write("Here we fit the data to models.")
+st.code("""
+# Linear Regression
+reg = LinearRegression().fit(X_train_scaled, y_train)
+reg.score(X_test_scaled, y_test) # test data
+
+# Lasso 
+lasso = Lasso().fit(X_train_scaled, y_train)
+lasso.score(X_test_scaled, y_test) # test data
+""")
+
+
+st.write(f'Linear Regression Model Score: `{lin_model()}`')
+
+st.write(f'Lasso Model Score: `{lasso_model()}`')
+
 st.markdown("<hr>", unsafe_allow_html=True)
+# END OF ML MODEL SECTION
 
 
+# New Section 
+st.header("Hmmm, What Happened?")
 
-#""" TODO
+st.write(f"""
+As we can see, a
+Linear Regression model score of `{round(lin_model(), 4)}` is likely not something we can trust. 
+The same goes for the Lasso model score of `{round(lasso_model(), 7)}`. 
+
+These models seem to be victim to *Overfitting*.
+
+Let's try this again, but use different models. We can compare the results and come to some meaningful
+conclusions.
+
+""")
+
+st.markdown("<hr>", unsafe_allow_html=True)
+# END OF WHAT HAPPENED SECTION
+
+#"""
 #--------------------------------
 #------ CONCLUSION SECTION ------
 #--------------------------------
