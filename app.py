@@ -461,8 +461,7 @@ st.markdown("<h1 style='text-align: center;'>California Wildfire Unsupervised Ma
 # Brief description of the web app
 st.write("""This machine learning (ML) model takes historical wildfire, drought, & precipitation data from 2013-2021
 and is trained to predict the likelihood of a wildfire given specific percipitation/drought
-conditions within California.
-""")
+conditions within California.""")
 
 st.markdown("<hr>", unsafe_allow_html=True)
 
