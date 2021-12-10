@@ -2,7 +2,7 @@
 
 [![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://share.streamlit.io/josephchancey/ca-wildfire-ml/main/app.py)
 
-Our aim was to utilize unsupervised machine learning to determine if wildfire burn acreage in California can be accurately predicted by the amount of precipitation. We collected data from Calfire and National Oceanic and Atmospheric Administration (NOAA) that included historic datapoints for wildfires, drought conditions, and precipitation by county in California.
+Our aim was to utilize unsupervised machine learning to determine if wildfire burn acreage in California can be accurately predicted by the amount of precipitation or the severity of drought. We collected data from CALFIRE and National Oceanic and Atmospheric Administration (NOAA) that included historic datapoints for wildfires, drought conditions, and precipitation by county in California.
 
 ## Repository Structure
 
