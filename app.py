@@ -387,9 +387,11 @@ def plot_rnd_frst():
 
     plt.scatter(list(X_test["Precip"]), list(y_test.values), c="Green", label="Training Data")
     plt.scatter(list(X_test["Precip"]), clf.predict(X_test), c="Red", label="Prediction")
+    plt.ylabel('Acres Burned')
+    plt.xlabel('Precipitation Level by County')
     plt.legend()
     #plt.hlines(y=0, xmin=y.min(), xmax=y.max())
-    plt.title("Random Forest Model Predictions")
+    plt.title("Random Forest Classification on Precipitation")
 
     return plt
 
@@ -436,9 +438,11 @@ def plot_lin_reg():
     plt.cla()
     plt.scatter(list(X_test["Precip"]), list(y_test.values), c="Green", label="Training Data")
     plt.scatter(list(X_test["Precip"]), reg.predict(X_test), c="Red", label="Predictions")
+    plt.ylabel('Acres Burned')
+    plt.xlabel('Precipitation Level by County')
     plt.legend()
     #plt.hlines(y=0, xmin=y.min(), xmax=y.max())
-    plt.title("Linear Regression Model")
+    plt.title("Linear Regression Model on Precipitation")
 
 
     return plt
@@ -455,9 +459,10 @@ def plot_lin_reg():
 st.markdown("<h1 style='text-align: center;'>California Wildfire Unsupervised Machine Learning Model</h1>", unsafe_allow_html=True)
 
 # Brief description of the web app
-st.write("This machine learning (ML) model takes historical wildfire, drought, & precipitation data from 2013-2021" \
-    " and is trained to predict the likelihood of a wildfire given specific percipitation/drought" \
-        " conditions within California.")
+st.write("""This machine learning (ML) model takes historical wildfire, drought, & precipitation data from 2013-2021
+and is trained to predict the likelihood of a wildfire given specific percipitation/drought
+conditions within California.
+""")
 
 st.markdown("<hr>", unsafe_allow_html=True)
 
@@ -802,10 +807,10 @@ if st.checkbox("Run Random Forest Classification Model"):
 
 
     col1.pyplot(plot_rnd_frst())
-    col1.write("Random Forest Model Predictions")
+    col1.caption("Random Forest Model Predictions")
 
     col2.pyplot(plot_lin_reg())
-    col2.write("Linear Regression Model Predictions")
+    col2.caption("Linear Regression Model Predictions")
 
     st.write("""
     Here, we can start to get an idea of just how overfitted our Linear Regression model is, as well as how 
@@ -831,6 +836,9 @@ susceptible to overfitting with our data. The Random Forest classification model
 wildly inaccurate, but it did not suffer from overfitting. From this we can 
 conclude that drought and precipitation data are good linear indicators of wildfire 
 acreage in California, although these models are not suitable to predict acreage.
+
+The repository for this project can be found on [Github](https://github.com/josephchancey/ca-wildfire-ml)
+
 """)
 
 # st.subheader("Linear Regression")
