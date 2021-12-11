@@ -6,7 +6,6 @@ import matplotlib.pyplot as plt
 import numpy as np
 import time
 import os.path
-import seaborn
 
 # ML dependency imports
 from sklearn.preprocessing import StandardScaler, MinMaxScaler
@@ -448,6 +447,311 @@ def plot_lin_reg():
     return plt
 
 
+def rfc_training_drought():
+        
+    # import fire data
+    fireFile = "./data/clean/fire_data_clean.csv"
+    fireData = pd.read_csv(fireFile)
+
+    droughtFile = "./data/clean/drought_data_clean.csv"
+    droughtData = pd.read_csv(droughtFile)
+
+    precipFile = "./data/clean/precip_data_clean.csv"
+    precipData = pd.read_csv(precipFile)
+
+    droughtMerged = pd.merge(droughtData, fireData, on = ["Date", "County"])
+    precipMerged = pd.merge(precipData, fireData, on = ["Date","County"])
+    masterMerge = pd.merge(droughtMerged, precipData, on = ["Date","County"])
+
+    masterML = pd.get_dummies(masterMerge)
+    masterML.drop(columns='None', inplace=True)
+
+    df = masterML
+    
+    X = df
+    y = df["AcresBurned"]
+
+    X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=1)
+    scaler = StandardScaler().fit(X_train)
+
+    X_train_scaled = scaler.transform(X_train)
+
+    X_test_scaled = scaler.transform(X_test)
+
+    clf = RandomForestClassifier()
+    clf.fit(X_train, y_train)
+    clf.score(X_train, y_train)
+    random_forest_val = clf.score(X_test, y_test)
+
+    
+    st.set_option('deprecation.showPyplotGlobalUse', False)
+
+    plt.cla()
+
+    plt.scatter(list(X_test["D3"]), list(y_test.values), c="green", label="Training Data")
+    # plt.scatter(list(X_test["Precip"]), clf.predict(X_test), c="red", label="Prediction")
+
+    plt.legend()
+    plt.ylabel('Acres Burned')
+    plt.xlabel('Percent of County in Drought Level 3')
+    #plt.hlines(y=0, xmin=y.min(), xmax=y.max())
+    plt.title("Random Forest Training on Drought D3")
+
+    return plt
+
+
+def rfc_prediction_drought():
+
+            
+    # import fire data
+    fireFile = "./data/clean/fire_data_clean.csv"
+    fireData = pd.read_csv(fireFile)
+
+    droughtFile = "./data/clean/drought_data_clean.csv"
+    droughtData = pd.read_csv(droughtFile)
+
+    precipFile = "./data/clean/precip_data_clean.csv"
+    precipData = pd.read_csv(precipFile)
+
+    droughtMerged = pd.merge(droughtData, fireData, on = ["Date", "County"])
+    precipMerged = pd.merge(precipData, fireData, on = ["Date","County"])
+    masterMerge = pd.merge(droughtMerged, precipData, on = ["Date","County"])
+
+    masterML = pd.get_dummies(masterMerge)
+    masterML.drop(columns='None', inplace=True)
+
+    df = masterML
+    
+    X = df
+    y = df["AcresBurned"]
+
+    X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=1)
+    scaler = StandardScaler().fit(X_train)
+
+    X_train_scaled = scaler.transform(X_train)
+
+    X_test_scaled = scaler.transform(X_test)
+
+    clf = RandomForestClassifier()
+    clf.fit(X_train, y_train)
+    clf.score(X_train, y_train)
+    random_forest_val = clf.score(X_test, y_test)
+
+    st.set_option('deprecation.showPyplotGlobalUse', False)
+    plt.cla()
+
+    plt.scatter(list(X_test["Precip"]), clf.predict(X_test), c="red", label="Prediction")
+
+    plt.legend()
+    plt.ylabel('Acres Burned')
+    plt.xlabel('Percent of County in Drought Level 3')
+    #plt.hlines(y=0, xmin=y.min(), xmax=y.max())
+    plt.title("Random Forest Testing on Drought D3")
+
+    return plt
+
+
+def rfc_drought_four_training():
+    # import fire data
+    fireFile = "./data/clean/fire_data_clean.csv"
+    fireData = pd.read_csv(fireFile)
+
+    droughtFile = "./data/clean/drought_data_clean.csv"
+    droughtData = pd.read_csv(droughtFile)
+
+    precipFile = "./data/clean/precip_data_clean.csv"
+    precipData = pd.read_csv(precipFile)
+
+    droughtMerged = pd.merge(droughtData, fireData, on = ["Date", "County"])
+    precipMerged = pd.merge(precipData, fireData, on = ["Date","County"])
+    masterMerge = pd.merge(droughtMerged, precipData, on = ["Date","County"])
+
+    masterML = pd.get_dummies(masterMerge)
+    masterML.drop(columns='None', inplace=True)
+
+    df = masterML
+    
+    X = df
+    y = df["AcresBurned"]
+
+    X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=1)
+    scaler = StandardScaler().fit(X_train)
+
+    X_train_scaled = scaler.transform(X_train)
+
+    X_test_scaled = scaler.transform(X_test)
+
+    clf = RandomForestClassifier()
+    clf.fit(X_train, y_train)
+    clf.score(X_train, y_train)
+    random_forest_val = clf.score(X_test, y_test)
+    st.set_option('deprecation.showPyplotGlobalUse', False)
+    plt.cla()
+
+    plt.scatter(list(X_test["D4"]), list(y_test.values), c="green", label="Training Data")
+    # plt.scatter(list(X_test["Precip"]), clf.predict(X_test), c="red", label="Prediction")
+
+    plt.legend()
+    plt.ylabel('Acres Burned')
+    plt.xlabel('Severe Drought Level 4')
+    #plt.hlines(y=0, xmin=y.min(), xmax=y.max())
+    plt.title("Random Forest Training on Drought D4")
+
+    return plt
+
+
+def rfc_drought_four_prediction():
+            # import fire data
+    fireFile = "./data/clean/fire_data_clean.csv"
+    fireData = pd.read_csv(fireFile)
+
+    droughtFile = "./data/clean/drought_data_clean.csv"
+    droughtData = pd.read_csv(droughtFile)
+
+    precipFile = "./data/clean/precip_data_clean.csv"
+    precipData = pd.read_csv(precipFile)
+
+    droughtMerged = pd.merge(droughtData, fireData, on = ["Date", "County"])
+    precipMerged = pd.merge(precipData, fireData, on = ["Date","County"])
+    masterMerge = pd.merge(droughtMerged, precipData, on = ["Date","County"])
+
+    masterML = pd.get_dummies(masterMerge)
+    masterML.drop(columns='None', inplace=True)
+
+    df = masterML
+    
+    X = df
+    y = df["AcresBurned"]
+
+    X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=1)
+    scaler = StandardScaler().fit(X_train)
+
+    X_train_scaled = scaler.transform(X_train)
+
+    X_test_scaled = scaler.transform(X_test)
+
+    clf = RandomForestClassifier()
+    clf.fit(X_train, y_train)
+    clf.score(X_train, y_train)
+    random_forest_val = clf.score(X_test, y_test)
+    st.set_option('deprecation.showPyplotGlobalUse', False)
+    plt.cla()
+
+    plt.scatter(list(X_test["D4"]), clf.predict(X_test), c="red", label="Prediction")
+
+    plt.legend()
+    plt.ylabel('Acres Burned')
+    plt.xlabel('Severe Drought Level 4')
+    #plt.hlines(y=0, xmin=y.min(), xmax=y.max())
+    plt.title("Random Forest Testing on Drought D4")
+
+    return plt
+
+
+def lin_reg_d4():
+    
+    print("MODEL RAN")
+    # import fire data
+    fireFile = "./data/clean/fire_data_clean.csv"
+    fireData = pd.read_csv(fireFile)
+
+    droughtFile = "./data/clean/drought_data_clean.csv"
+    droughtData = pd.read_csv(droughtFile)
+
+    precipFile = "./data/clean/precip_data_clean.csv"
+    precipData = pd.read_csv(precipFile)
+
+    droughtMerged = pd.merge(droughtData, fireData, on = ["Date", "County"])
+    precipMerged = pd.merge(precipData, fireData, on = ["Date","County"])
+    masterMerge = pd.merge(droughtMerged, precipData, on = ["Date","County"])
+
+    droughtML = pd.get_dummies(droughtMerged)
+    precipML = pd.get_dummies(precipMerged)
+    masterML = pd.get_dummies(masterMerge)
+    masterML.drop(columns='None', inplace=True)
+
+
+    df = masterML
+    
+    X = df
+    y = df["AcresBurned"]
+
+    X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=1)
+    scaler = StandardScaler().fit(X_train)
+
+    X_train_scaled = scaler.transform(X_train)
+
+    X_test_scaled = scaler.transform(X_test)
+
+    reg = LinearRegression().fit(X_train_scaled, y_train)
+    reg_score_val = reg.score(X_test_scaled, y_test)
+
+    plt.cla()
+    st.set_option('deprecation.showPyplotGlobalUse', False)
+    plt.scatter(list(X_test["D4"]), list(y_test.values), c="green", label="Training Data")
+    plt.scatter(list(X_test["D4"]), reg.predict(X_test), c="red", label="Prediction")
+    plt.legend()
+    plt.ylabel('Acres Burned')
+    plt.xlabel('Drought Level 4')
+    #plt.hlines(y=0, xmin=y.min(), xmax=y.max())
+    plt.title("Linear Regression Severe Drought Level 4")
+
+    return plt
+
+
+
+def lin_reg_d3():
+    print("MODEL RAN")
+    # import fire data
+    fireFile = "./data/clean/fire_data_clean.csv"
+    fireData = pd.read_csv(fireFile)
+
+    droughtFile = "./data/clean/drought_data_clean.csv"
+    droughtData = pd.read_csv(droughtFile)
+
+    precipFile = "./data/clean/precip_data_clean.csv"
+    precipData = pd.read_csv(precipFile)
+
+    droughtMerged = pd.merge(droughtData, fireData, on = ["Date", "County"])
+    precipMerged = pd.merge(precipData, fireData, on = ["Date","County"])
+    masterMerge = pd.merge(droughtMerged, precipData, on = ["Date","County"])
+
+    droughtML = pd.get_dummies(droughtMerged)
+    precipML = pd.get_dummies(precipMerged)
+    masterML = pd.get_dummies(masterMerge)
+    masterML.drop(columns='None', inplace=True)
+
+
+    df = masterML
+    
+    X = df
+    y = df["AcresBurned"]
+
+    X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=1)
+    scaler = StandardScaler().fit(X_train)
+
+    X_train_scaled = scaler.transform(X_train)
+
+    X_test_scaled = scaler.transform(X_test)
+
+    reg = LinearRegression().fit(X_train_scaled, y_train)
+    reg_score_val = reg.score(X_test_scaled, y_test)
+
+    plt.cla()
+    st.set_option('deprecation.showPyplotGlobalUse', False)
+
+
+    plt.scatter(list(X_test["D3"]), list(y_test.values), c="green", label="Training Data")
+    plt.scatter(list(X_test["D3"]), reg.predict(X_test), c="red", label="Prediction")
+    plt.legend()
+    plt.ylabel('Acres Burned')
+    plt.xlabel('Drought Level 3')
+    #plt.hlines(y=0, xmin=y.min(), xmax=y.max())
+    plt.title("Linear Regression Drought Level 3")
+
+    return plt
+
+
 
 #"""
 #--------------------------
@@ -461,8 +765,7 @@ st.markdown("<h1 style='text-align: center;'>California Wildfire Unsupervised Ma
 # Brief description of the web app
 st.write("""This machine learning (ML) model takes historical wildfire, drought, & precipitation data from 2013-2021
 and is trained to predict the likelihood of a wildfire given specific percipitation/drought
-conditions within California.
-""")
+conditions within California.""")
 
 st.markdown("<hr>", unsafe_allow_html=True)
 
@@ -805,7 +1108,6 @@ if st.checkbox("Run Random Forest Classification Model"):
 
     col1, col2 = st.columns(2)
 
-
     col1.pyplot(plot_rnd_frst())
     col1.caption("Random Forest Model Predictions")
 
@@ -816,6 +1118,37 @@ if st.checkbox("Run Random Forest Classification Model"):
     Here, we can start to get an idea of just how overfitted our Linear Regression model is, as well as how 
     poorly our Random Forest model performs.
     """)
+
+    st.subheader("Examining Drought Levels with RFC Model")
+
+    rfc_col1, rfc_col2 = st.columns(2)
+
+
+    rfc_col1.pyplot(rfc_training_drought())
+    rfc_col1.caption("Random Forest Model Training on Drought D3")
+
+    rfc_col2.pyplot(rfc_prediction_drought())
+    rfc_col2.caption("Random Forest Model Prediction on Drought D3")
+
+
+    rfc_col3, rfc_col4 = st.columns(2)
+
+    rfc_col3.pyplot(rfc_drought_four_training())
+    rfc_col3.caption("Random Forest Model Training on Drought D4")
+
+    rfc_col4.pyplot(rfc_drought_four_prediction())
+    rfc_col4.caption("Random Forest Model Prediction on Drought D4")
+
+
+    st.subheader("Examining Drought Levels with Linear Regression Model")
+
+    lin_col1, lin_col2 = st.columns(2)
+
+    lin_col1.pyplot(lin_reg_d3())
+    lin_col1.caption("Linear Regression Model on Drought D3")
+
+    lin_col2.pyplot(lin_reg_d4())
+    lin_col2.caption("Linear Regression Model on Drought D4")
 
 
 st.markdown("<hr>", unsafe_allow_html=True)
