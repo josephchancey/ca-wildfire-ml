@@ -10,7 +10,7 @@ Main application | [app.py](app.py)
 
 Cleaning Notebooks | [Three Notebooks](/data)
 
-Machine Learning Notebook | [Three Notebooks](/data/clean/Preprocessing-&-Machine-Learning.ipynb)
+Machine Learning Notebook | [ML Notebook](/data/clean/Preprocessing-&-Machine-Learning.ipynb)
 
 ## Authors
 
