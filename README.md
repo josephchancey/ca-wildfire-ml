@@ -44,6 +44,7 @@ You could also visit the live build of this project here  [![Streamlit App](http
 
 ![4](https://i.imgur.com/bXfQpyj.png)
 
+![5](https://i.imgur.com/EuMSW8h.png)
 ![5](https://i.imgur.com/VsT8Qq4.png)
 
 ![6](https://i.imgur.com/xZYpbnf.png)
